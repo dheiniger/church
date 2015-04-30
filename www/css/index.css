@@ -1,0 +1,171 @@
+@font-face {
+    font-family: 'Oswald-Stencil';
+    src: url('../font/oswald/Oswald-Stencil.otf');
+}
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('../font/oswald/Oswald-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Oswald-Bold';
+    src: url('../font/oswald/Oswald-Bold.ttf');
+}
+
+html, body {
+    margin:0;
+    padding:0;
+    height: 100%;
+}
+body {
+    font-family: source-sans-pro, sans-serif;
+    position: relative;
+    height:100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+a{
+    color: #63B32E;
+    text-decoration: none;
+}
+
+h1{
+    font-family: Oswald-Stencil;
+}
+
+.list-title{   
+    font-size: x-large;
+    margin: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display:block;
+    white-space: nowrap;
+}
+
+.list-segment{
+     border-bottom:solid 1px gray;
+     text-overflow: ellipsis;
+}
+
+.timestamp{
+    color: #63B32E;
+}
+
+.content-title{
+    font-size: 18px;
+}
+
+.loader{
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    margin-top: 50%;
+}
+
+#content {
+    background-color: #fff;
+    padding: 0px 15px;
+    margin-top: 90px;
+}
+
+#content img{
+   width: 100%;
+   height: auto;
+}
+
+#navigation-wrapper{
+    position: fixed;
+    width: 100%;
+    top: 0px;
+}
+
+#navigation-title{
+    background-color: #fff;
+}
+
+#navigation-title span{
+    font-family: Oswald-Stencil;
+    font-size: large;
+}
+
+.menu-bar{
+    height: 40px;
+    background-color: rgb(102,102,102);
+    margin-top: -16px;
+}
+
+.menu-bar ul{
+    height: 95%;
+    margin-left: -40px;
+}
+
+.menu-bar li{
+    display: inline;
+    float: left;
+    display: block;
+    width: 25%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 38px;
+}
+
+.menu-bar a{
+    display: block;
+    height: 100%;
+    border: solid 1px black;    
+    color: #82ce50;
+    font-family: oswald;
+}
+
+.menu-bar-button{
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+
+.nav-wrapper{
+    width: 600px;
+}
+
+.social-button-wrapper{
+    position: relative;
+    top: 30px;
+    width: 80%;
+    margin: auto;
+}
+
+.social-button{
+    height: 50px;
+    margin-top:10px;
+    color: #fff;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    position: relative;    
+    border-radius: 0.6em;
+    font-family: Oswald-Bold;
+}
+
+.social-button a{
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    vertical-align: middle;
+}
+
+#facebook-button{
+    background-color: #3b5998;
+   
+}
+
+#website-button{
+    background-color: #555;
+}
+
+@media screen and (min-width: 640px) { /* @media screen and (min-width: 880px) { */
+    
+}

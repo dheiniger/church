@@ -63,7 +63,7 @@ function retrieveBlogPost(blogIndex){
 function updateSermons(){
     if(typeof(sermonsContent) === 'undefined' || sermonsContent === null){
 	$.ajax({
-            url: 'http://norwalkbaptist.org/recent-sermons/?json=1',
+            url: 'http://norwalkbaptist.org/sermons/?json=1',
             dataType: 'jsonp',
             success: function(json){
 		var html = "";
@@ -89,8 +89,8 @@ function updateSermons(){
 function updateConnect(){
     if(typeof(connectContent) === 'undefined' || connectContent == null){
 	html = "<div class='social-button-wrapper'>" +
-	    "<div id='facebook-button' class='social-button'><a href='https://www.facebook.com/NorwalkBaptistChurch'>Visit our Facebook page!</a></div>" +
 	    "<div id='website-button' class='social-button'><a href='http://norwalkbaptist.org'>Visit our website!</a></div>" +
+	    "<div id='facebook-button' class='social-button'><a href='https://www.facebook.com/NorwalkBaptistChurch'>Visit our Facebook page!</a></div>" +	   
 	    "</div>";
 	connectContent = html;
 	renderPageContent(connectContent);
@@ -157,13 +157,19 @@ function getSermonAudioSources(audioTags){
     return sermonAudioSources;
 }
 
-function displaySermon(index){
-   var html = "<audio controls>" +
-	"<source src = '" + sermonSources[index] +"' type='audio/mpeg'>" + 
-	"</audio>";
+function displaySermon(index){    
+    var html = "<h1 class='content-title'>" + sermonTitles[index]+ "</h1>" +
+ 	"<section id='audio-player'>" +
+	"<audio id='audio' src='" + sermonSources[index] + "'></audio>" + 
+	"<span id='time-played'></span>" +
+	"<span id='time-remaining'></span>" +
+	"<input type='range' class='topcoat-range' id='seekbar'>" +	
+	"<button onclick=\"document.getElementById(\'audio\').play()\">Play</button>" +
+	"<button onclick=\"document.getElementById(\'audio\').pause()\">Pause</button>" +
+	"</section>";
+
     renderPageContent(html);
-    console.log("sermon src for index: " + index + " is: " + sermonSources[index]);
-   // playAudio(sermonSources[index]);
+    initializeBar();
 }
 
 function updateContact(){
@@ -178,71 +184,46 @@ function isNumeric(num){
     return !isNaN(num)
 }
 
+function setupSeekbar() {
+    seekbar.min = audio.startTime;
+    seekbar.max = audio.startTime + audio.duration;
+    console.log("seekbar: " + seekbar.value);
+}
 
-//audio player code - this is more of a sample and isn't being used right now
-/*var my_media = null;
-var mediaTimer = null;
+function seekAudio() {
+    audio.currentTime = seekbar.value;
+    console.log(seekbar.value);
+}
 
-function playAudio(src) {
-    // Create Media object from src
-    my_media = new Media(src, onSuccess, onError);
+function updateUI() {   
+    var lastBuffered = audio.buffered.end(audio.buffered.length-1);
+    var timePlayed = document.getElementById('time-played');
+    var timeRemaining = document.getElementById('time-remaining');
+    seekbar.min = audio.startTime;
+    seekbar.max = lastBuffered;
+    seekbar.value = audio.currentTime;
+    timePlayed.innerHTML = convertSecondsToTimeFormat("" + audio.currentTime);
+    timeRemaining.innerHTML = '-' + convertSecondsToTimeFormat(seekbar.max - audio.currentTime);
+    console.log("ui updated: " + seekbar.value);
+}
+
+function initializeBar(){
+    var audio = document.getElementById('audio');
+    var seekbar = document.getElementById('seekbar');
+    audio.addEventListener('durationchange', setupSeekbar);
+    audio.addEventListener('timeupdate', updateUI);
+    seekbar.onchange = seekAudio;
+    audio.ontimeupdate = updateUI;
+    seekbar.value = 0;
+}
+
+function convertSecondsToTimeFormat(timeInSeconds){
+    var seconds = Math.floor(timeInSeconds % 60);
+    var minutes = Math.floor(timeInSeconds / 60);
+    var hours = Math.floor(minutes / 60);
     
-    // Play audio
-    my_media.play();
-    
-    // Update my_media position every second
-    if (mediaTimer == null) {
-        mediaTimer = setInterval(function() {
-            // get my_media position
-            my_media.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        setAudioPosition((position) + " sec");
-                    }
-                },
-                // error callback
-                function(e) {
-                    console.log("Error getting pos=" + e);
-                    setAudioPosition("Error: " + e);
-                }
-            );
-        }, 1000);
+    if(seconds < 10){
+	seconds = "0" + seconds;
     }
+    return minutes + ":" + seconds; 
 }
-
-function pauseAudio() {
-    if (my_media) {
-        my_media.pause();
-    }
-}
-
-// Stop audio
-//
-function stopAudio() {
-    if (my_media) {
-        my_media.stop();
-    }
-    clearInterval(mediaTimer);
-    mediaTimer = null;
-}
-
-// onSuccess Callback
-//
-function onSuccess() {
-    console.log("playAudio():Audio Success");
-}
-
-// onError Callback
-//
-function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
-}
-
-// Set audio position
-//
-function setAudioPosition(position) {
-    document.getElementById('audio_position').innerHTML = position;
-}
-*/

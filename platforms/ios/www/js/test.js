@@ -5,12 +5,18 @@ var sermonsContent;
 var connectContent;
 var sermonTitles;
 var sermonSources;
+var playing;
+var media;
+var mediaTimer;
+var playPauseButton;
+var seekbar;
 
 function initializeJsonVariables(){
 
 }
 
 function updateAbout(){
+    console.log(aboutContent);
     if(typeof(aboutContent) === 'undefined' || aboutContent === null){
 	$.ajax({
             url: 'http://norwalkbaptist.org/church-beliefs/?json=1',
@@ -63,7 +69,7 @@ function retrieveBlogPost(blogIndex){
 function updateSermons(){
     if(typeof(sermonsContent) === 'undefined' || sermonsContent === null){
 	$.ajax({
-            url: 'http://norwalkbaptist.org/recent-sermons/?json=1',
+            url: 'http://norwalkbaptist.org/sermons/?json=1',
             dataType: 'jsonp',
             success: function(json){
 		var html = "";
@@ -89,8 +95,8 @@ function updateSermons(){
 function updateConnect(){
     if(typeof(connectContent) === 'undefined' || connectContent == null){
 	html = "<div class='social-button-wrapper'>" +
-	    "<div id='facebook-button' class='social-button'><a href='https://www.facebook.com/NorwalkBaptistChurch'>Visit our Facebook page!</a></div>" +
 	    "<div id='website-button' class='social-button'><a href='http://norwalkbaptist.org'>Visit our website!</a></div>" +
+	    "<div id='facebook-button' class='social-button'><a href='https://www.facebook.com/NorwalkBaptistChurch'>Visit our Facebook page!</a></div>" +	   
 	    "</div>";
 	connectContent = html;
 	renderPageContent(connectContent);
@@ -151,19 +157,56 @@ function getSermonAudioSources(audioTags){
     Object.keys(audioTags).forEach(function(index){
 	if(isNumeric(index)){
 	    sermonAudioSources.push(audioTags[index].textContent);
-	    console.log(sermonAudioSources[index]);
+	    //console.log(sermonAudioSources[index]);
 	}
     });
     return sermonAudioSources;
 }
 
-function displaySermon(index){
-   var html = "<audio controls>" +
-	"<source src = '" + sermonSources[index] +"' type='audio/mpeg'>" + 
-	"</audio>";
-    renderPageContent(html);
-    console.log("sermon src for index: " + index + " is: " + sermonSources[index]);
-   // playAudio(sermonSources[index]);
+function togglePlayPause(){   
+    if(!playing){
+	console.log("resuming");
+	play();
+    }else{
+	pause();
+    }
+}
+
+function play(){   
+    updateSeekBar();
+    media.play();
+    playing = true;
+    playPauseButton.innerHTML = "Pause";
+}
+
+
+function pause(){
+    media.pause();
+    clearInterval(mediaTimer);
+    playing = false;
+    playPauseButton.innerHTML = "Play";
+}   
+
+function stop(){
+    media.stop();
+    media.release();
+    clearInterval(mediaTimer);
+    media = null;
+}
+
+function displaySermon(index){   
+    var html = "<h1 class='content-title'>" + sermonTitles[index]+ "</h1>" +
+ 	"<section id='audio-player'>" +
+	//"<audio id='audio' src='" + sermonSources[index] + "'></audio>" + 
+	"<span id='time-played'>0:00</span>" +
+	"<span id='time-remaining'>0:00</span>" +
+	"<input type='range' id='seekbar' min='0'>" +	
+	"<button id='playPauseButton' disabled onclick=\"togglePlayPause();\">Play</button>" +
+	//"<button onclick=\"pause();\">Pause</button>" + 
+	"</section>";
+ 
+    renderPageContent(html);    
+    initializeBar(index);   
 }
 
 function updateContact(){
@@ -178,71 +221,126 @@ function isNumeric(num){
     return !isNaN(num)
 }
 
+function setupSeekbar() {
+    seekbar.min = 0;
+    seekbar.max = media.startTime + media.duration();
+    alert("seekbar set up " + seekbar.min() + " " + seekbar.max());
+    //console.log("seekbar: " + seekbar.value);
+}
 
-//audio player code - this is more of a sample and isn't being used right now
-/*var my_media = null;
-var mediaTimer = null;
+function updateTimers(position){
+    var timePlayed = document.getElementById('time-played');
+    var timeRemaining = document.getElementById('time-remaining');
+    timePlayed.innerHTML = convertSecondsToTimeFormat(position);
+    timeRemaining.innerHTML = convertSecondsToTimeFormat(media.getDuration() - position);
+}
 
-function playAudio(src) {
-    // Create Media object from src
-    my_media = new Media(src, onSuccess, onError);
+function seekAudio() {
+    if(playing){
+	console.log("pausing");
+	pause();
+    }
+    //TODO - this needs to use th position of the seekbar instead of media
     
-    // Play audio
-    my_media.play();
+    updateTimers(seekbar.value);
+  
+    //audio.currentTime = seekbar.value;
+    console.log("seeking: " + seekbar.value);
+    media.seekTo(convertToMilliSeconds(seekbar.value));
+    media.getCurrentPosition(function(position){console.log("current position before: " + position)});
+}
+
+function convertToMilliSeconds(seconds){
+    return seconds*1000;
+}
+
+//@Deprecated
+function updateUI() {   
+    var lastBuffered = audio.buffered.end(audio.buffered.length-1);
+    var timePlayed = document.getElementById('time-played');
+    var timeRemaining = document.getElementById('time-remaining');
+    seekbar.min = audio.startTime;
+    seekbar.max = lastBuffered;
+    seekbar.value = audio.currentTime;
+    timePlayed.innerHTML = convertSecondsToTimeFormat("" + audio.currentTime);
+    timeRemaining.innerHTML = '-' + convertSecondsToTimeFormat(seekbar.max - audio.currentTime);
+    console.log("ui updated: " + seekbar.value);
+}
+
+function updateSeekBar(){
+    if(typeof(seekbar) === 'undefined' || seekbar === null){
+	seekbar = document.getElementById('seekbar');
+    }    
     
-    // Update my_media position every second
-    if (mediaTimer == null) {
-        mediaTimer = setInterval(function() {
-            // get my_media position
-            my_media.getCurrentPosition(
-                // success callback
-                function(position) {
-                    if (position > -1) {
-                        setAudioPosition((position) + " sec");
-                    }
-                },
-                // error callback
-                function(e) {
-                    console.log("Error getting pos=" + e);
-                    setAudioPosition("Error: " + e);
-                }
-            );
-        }, 1000);
+    // Update media position every second
+    mediaTimer = setInterval(function () {
+	// get media position
+	media.getCurrentPosition(
+            // success callback
+            function (position) {
+		console.log("The current position is: " + position);
+		if (position > -1) {
+		    seekbar.value = position;		    
+		    updateTimers(position);
+		    //timePlayed.innerHTML = position;
+		}
+            },
+            // error callback
+            function (e) {
+		console.log("Error getting pos=" + e);
+            }
+	);
+    }, 1000);
+}
+
+function buffer(){
+    //this is a stupid hack
+    media.play();
+    media.pause();
+    media.stop();
+    var counter = 0;
+    var timerDur = setInterval(function() {
+        counter = counter + 100;
+        if (counter > 20000) {
+            clearInterval(timerDur);
+        }
+        var dur = media.getDuration();
+	console.log("buffering: " + dur);
+        if (dur > 0) {
+            clearInterval(timerDur);
+	    seekbar.max = media.getDuration();
+            updateTimers(dur);
+	    playPauseButton.disabled = false;
+        }
+    }, 100);
+}
+
+function initializeBar(index){
+    if(typeof(playPauseButton) === 'undefined' || playPauseButton === null){
+	playPauseButton = document.getElementById('playPauseButton');
     }
-}
-
-function pauseAudio() {
-    if (my_media) {
-        my_media.pause();
+    if(typeof(media) === 'undefined' || media === null){
+	media = new Media(sermonSources[index]);	
     }
-}
-
-// Stop audio
-//
-function stopAudio() {
-    if (my_media) {
-        my_media.stop();
+    if(typeof(seekbar) === 'undefined' || seekbar ===null){
+	seekbar = document.getElementById('seekbar');
     }
-    clearInterval(mediaTimer);
-    mediaTimer = null;
+    buffer();
+    
+    seekbar.addEventListener('change', seekAudio);
+    seekbar.value = 0;
+      
+    console.log("media maxDuration: " + media.getDuration());
 }
 
-// onSuccess Callback
-//
-function onSuccess() {
-    console.log("playAudio():Audio Success");
-}
 
-// onError Callback
-//
-function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
+function convertSecondsToTimeFormat(timeInSeconds){
+    var seconds = Math.floor(timeInSeconds % 60);
+    var minutes = Math.floor(timeInSeconds / 60);
+    var hours = Math.floor(minutes / 60);
+    
+    if(seconds < 10){
+	seconds = "0" + seconds;
+    }
+    return minutes + ":" + seconds; 
 }
-
-// Set audio position
-//
-function setAudioPosition(position) {
-    document.getElementById('audio_position').innerHTML = position;
-}
-*/

@@ -21,12 +21,12 @@
     <feature name="Media">
         <param name="ios-package" value="CDVSound" />
     </feature>
-    <name>First Baptist</name>
+    <name>FBC Norwalk</name>
     <description>
         Application that retrieves common data from NorwalkBaptist.org
     </description>
-    <author email="developer@norwalkbaptist.org" href="http:norwalkbaptist.org">
-        First Baptist Church of Norwalk
+    <author email="daniel.r.heiniger@gmail.com" href="http:norwalkbaptist.org">
+        FBC Norwalk
     </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />

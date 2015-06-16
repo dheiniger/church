@@ -1,11 +1,9 @@
 /home/daniel/workspace/church/platforms/android/ant-build/CordovaApp.ap_ \
  : /home/daniel/workspace/church/platforms/android/res/drawable/splash.png \
-/home/daniel/workspace/church/platforms/android/res/drawable/splash1.png \
 /home/daniel/workspace/church/platforms/android/res/drawable/icon.png \
 /home/daniel/workspace/church/platforms/android/res/values/strings.xml \
 /home/daniel/workspace/church/platforms/android/res/xml/config.xml \
 /home/daniel/workspace/church/platforms/android/ant-build/res/drawable/splash.png \
-/home/daniel/workspace/church/platforms/android/ant-build/res/drawable/splash1.png \
 /home/daniel/workspace/church/platforms/android/ant-build/res/drawable/icon.png \
 /home/daniel/workspace/church/platforms/android/assets/_where-is-www.txt \
 /home/daniel/workspace/church/platforms/android/assets/www \

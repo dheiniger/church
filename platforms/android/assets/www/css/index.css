@@ -68,7 +68,8 @@ sermon-title{
     width: 30px;
     height: 30px;
     top: 50%;
-    left: 49%;
+    left: 50%;
+    margin: 0 0 0 -15px;
     position: fixed;
 }
 

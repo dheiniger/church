@@ -11,15 +11,19 @@ var media;
 var mediaTimer;
 var playPauseButton;
 var seekbar;
+var currentPage = "blog";
 
 function updateAbout(){
+    currentPage = "about";
     if(typeof(aboutContent) === 'undefined' || aboutContent === null){
 	$.ajax({
             url: 'http://norwalkbaptist.org/church-beliefs/?json=1',
             dataType: 'jsonp',
             success: function(json){
 		aboutContent = json.page.content;
-		renderPageContent(aboutContent);
+		if(currentPage === "about"){
+		    renderPageContent(aboutContent);
+		}
             }    
 	});
     }else{	
@@ -28,6 +32,7 @@ function updateAbout(){
 }
 
 function updateBlog(){
+    currentPage = "blog";
     if(typeof(blogContent) === 'undefined' || blogContent === null){
 	$.ajax({
             url: 'http://norwalkbaptist.org/?json=get_recent_posts',
@@ -35,8 +40,10 @@ function updateBlog(){
             success: function(json){
 		blogPosts = json.posts;
 		blogContentHtml = retrieveBlogHTMLFromJson(blogPosts);
-		renderPageContent(blogContentHtml);
-            }    
+		if(currentPage === "blog"){
+		    renderPageContent(blogContentHtml);
+		}
+	    }    
 	});
     }else{
 	renderPageContent(blogContentHtml);
@@ -63,6 +70,7 @@ function retrieveBlogPost(blogIndex){
 }
 
 function updateSermons(){
+    currentPage = "sermons";
     if(typeof(sermonsContent) === 'undefined' || sermonsContent === null){
 	$.ajax({
             url: 'http://norwalkbaptist.org/sermons/?json=1',
@@ -82,7 +90,9 @@ function updateSermons(){
 		});
 		
 		sermonsContent = html;
-		renderPageContent(sermonsContent);
+		if(currentPage === "sermons"){
+		    renderPageContent(sermonsContent);
+		}
             }    
 	});
     }else{

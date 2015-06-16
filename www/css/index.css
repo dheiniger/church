@@ -59,6 +59,21 @@ h1{
 .loader{
     width: 30px;
     height: 30px;
+<<<<<<< Updated upstream
+=======
+    top: 50%;
+    left: 50%;
+    margin: 0 0 0 -15px;
+    position: fixed;
+}
+
+.buffer{
+    background: url(../img/ajax-loader.gif);
+    background-repeat: no-repeat;
+    border: none;
+    height:30px;
+    width: 30px;
+>>>>>>> Stashed changes
     margin: auto;
     margin-top: 50%;
 }

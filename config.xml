@@ -33,11 +33,12 @@
     <gap:splash src="res/screen/ios/splash.png" gap:platform="ios"/>
     <icon src="res/icon/ios/icon.png" gap:platform="ios"/>-->
     
-    <!--default stuff -->
+    <!--default stuff 
     <splash src="res/splash.png"/>
-    <icon src="icon.png" />
+    <icon src="icon.png" />-->
     
-    <preference name="SplashScreenDelay" value="30000" />
+    <preference name="SplashScreen" value="splash"/>
+    <preference name="SplashScreenDelay" value="3000" />
     
     <access origin="*" />
 </widget>

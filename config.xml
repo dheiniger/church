@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.norwalk.baptist" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>FBC Norwalk</name>
+    <name>First Baptist</name>
     <description>
         Application that retrieves common data from NorwalkBaptist.org
     </description>
-    <author email="daniel.r.heiniger@gmail.com" href="http:norwalkbaptist.org">
-        FBC Norwalk
+    <author email="developer@norwalkbaptist.org" href="http:norwalkbaptist.org">
+        First Baptist Church of Norwalk
     </author>
     <content src="index.html" />
     <preference name="permissions" value="none" />
@@ -42,8 +42,8 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
     <icon src="res/icon.png" />
-    <preference name="SplashScreen" value="splash" />
-    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreen" value="icon" />
+    <preference name="SplashScreenDelay" value="2000" />
    <!-- <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />
     <icon gap:platform="android" gap:qualifier="mdpi" src="www/res/icon/android/icon-48-mdpi.png" />
     <icon gap:platform="android" gap:qualifier="hdpi" src="www/res/icon/android/icon-72-hdpi.png" />

@@ -21,7 +21,7 @@ html, body {
 body {
     font-family: source-sans-pro, sans-serif;
     position: relative;
-    height:80%;
+    height:100%;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -32,10 +32,6 @@ a{
 
 h1{
     font-family: Oswald-Stencil;
-}
-
-p{
-    font-family: Arial;
 }
 
 .list-title{   
@@ -60,26 +56,11 @@ p{
     font-size: 18px;
 }
 
-sermon-title{
-   font-size: 28px;
-}
-
 .loader{
     width: 30px;
     height: 30px;
-    top: 50%;
-    left: 49%;
-    position: fixed;
-}
-
-.buffer{
-    background: url(../img/ajax-loader.gif);
-    background-repeat: no-repeat;
-    border: none;
-    height:30px;
-    width: 30px;
     margin: auto;
-    display: block;
+    margin-top: 50%;
 }
 
 #content {
@@ -101,18 +82,11 @@ sermon-title{
 
 #navigation-title{
     background-color: #fff;
-    line-height: 39px;
-    vertical-align: middle;
 }
 
 #navigation-title span{
     font-family: Oswald-Stencil;
-    font-size: x-large;   
-}
-
-#navigation-title img{
-    position: relative;
-    top: 5px;
+    font-size: large;
 }
 
 .menu-bar{
@@ -193,8 +167,8 @@ sermon-title{
 }
 
 #audio-player{
-    width: 75%;
-    margin-top: 30%;
+    width: 50%;
+    margin-top: 50%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -207,145 +181,10 @@ sermon-title{
     float: right;
 }
 
-.timer{
-    font-family: Oswald;
-}
-
 #seekbar{
     width: 100%;
-    height: 15px;
-    background-color:#3373A5;
-    border: solid black 2px;
-    border-radius: 25px;
 }
 
-input[type=range] {
-  -webkit-appearance: none;
-  margin: 18px 0;
-  width: 100%;
-  /*background: #3071a9;*/
-}
-input[type=range]:focus {
-  outline: none;
-}
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
-}
-input[type=range]::-webkit-slider-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -14px;
-}
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #367ebd;
-}
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
-}
-input[type=range]::-moz-range-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-}
-input[type=range]::-ms-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  animate: 0.2s;
-  background: transparent;
-  border-color: transparent;
-  border-width: 16px 0;
-  color: transparent;
-}
-input[type=range]::-ms-fill-lower {
-  background: #2a6495;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]::-ms-fill-upper {
-  background: #3071a9;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-}
-input[type=range]:focus::-ms-fill-lower {
-  background: #3071a9;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #367ebd;
-}
-
-.header{
-    text-align: center;
-}
-
-.play{
-    height: 100px;
-    width: 70px;
-    border: none;
-    background: url("../img/play.png");
-    margin: auto;
-    display: block;
-}
-
-.pause{
-    height: 100px;
-    width: 70px;
-    border: none;
-    background: url("../img/pause1.png");
-    margin: auto;
-    display: block;
-}
-
-.stop{
-    height: 100px;
-    width: 100px;
-    border: none;
-    background: url("../img/stop.png");
-}
-
-.subheader{
-    font-size: 15px;
-    text-align: center;
-    color: #63B32E;
-}
-
-@media screen and (min-width: 400px) { /* @media screen and (min-width: 880px) { */
-    #audio-player{	
-	margin-top: 5%;
-    }
+@media screen and (min-width: 640px) { /* @media screen and (min-width: 880px) { */
+    
 }

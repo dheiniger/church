@@ -35,7 +35,6 @@ bindHandlers = function(){
 initialize = function(){
     FastClick.attach(document.body);
     bindHandlers();
-    $("#blogButton").click();
 };
 
 initialize();

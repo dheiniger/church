@@ -27,20 +27,50 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.media" />
         
-    <!--<gap:splash src="res/screen/android/splash.png" gap:platform="android"/>
-    <icon src="res/icon/android/icon.png" gap:platform="android"/>
-    
-    <gap:splash src="res/screen/ios/splash.png" gap:platform="ios"/>
-    <icon src="res/icon/ios/icon.png" gap:platform="ios"/>-->
-    
-    <!--default stuff -->
-    <gap:splash src="splash.png"/>
-    <!--<splash src="res/splash.png"/>-->
-    <icon src="icon.png" />
-    
+     <!-- Default application icon -->
+	<icon src="www/res/icon.png" />
+	<splash src="www/res/splash.png" />
+	
+	<!-- Android -->
+	<icon src="www/res/icon.png" platform="android" density="ldpi" />
+	<icon src="www/res/icon.png" platform="android" density="mdpi" />
+	<icon src="www/res/icon.png" platform="android" density="hdpi" />
+	<icon src="www/res/icon.png" platform="android" density="xhdpi" />
+	
+	<splash src="www/res/splash.png" platform="android" density="ldpi" />
+	<splash src="www/res/splash.png" platform="android" density="mdpi"/>
+	<splash src="www/res/splash.png" platform="android" density="hdpi"/>
+	<splash src="www/res/splash.png" platform="android" density="xhdpi"/>
+	
+	<!-- iOS -->
+	<splash src="www/res/splash.png" platform="ios" width="320" height="480" />
+	<splash src="www/res/splash.png" platform="ios" width="640" height="960" />
+	
+	<!-- iPhone 5 / iPod Touch (5th Generation) -->
+	<splash src="www/res/splash.png" platform="ios" width="640" height="1136" />
+	
+	<!-- iPhone 6 -->
+	<splash src="www/res/splash.png" platform="ios" width="750" height="1334" />
+	<splash src="www/res/splash.png" platform="ios" width="1242" height="2208" />
+	<splash src="www/res/splash.png" platform="ios" width="2208" height="1242" />
+	
+	<icon src="www/res/icon.png" platform="ios" width="57" height="57" />
+	<icon src="www/res/icon.png" platform="ios" width="114" height="114" />
+
+	<!-- iPad -->
+	<icon src="www/res/icon.png" platform="ios" width="72" height="72" />
+	<icon src="www/res/icon.png" platform="ios" width="144" height="144" />
+	
+	<!-- iPhone Spotlight and Settings Icon -->
+	<icon src="www/res/icon.png" platform="ios" width="29" height="29" />
+	<icon src="www/res/icon.png" platform="ios" width="58" height="58" />
+	
+	<!-- iPad Spotlight and Settings Icon -->
+	<icon src="www/res/icon.png" platform="ios" width="50" height="50" />
+	<icon src="www/res/icon.png" platform="ios" width="100" height="100" />	
+
     <preference name="SplashScreen" value="splash"/>
-    <preference name="SplashScreenDelay" value="3000" />
-    <preference name="phonegap-version" value="3.7.0" />
+    <preference name="SplashScreenDelay" value="5000" />
     
     <access origin="*" />
 </widget>

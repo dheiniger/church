@@ -69,7 +69,7 @@
 	<icon src="www/res/icon.png" platform="ios" width="50" height="50" />
 	<icon src="www/res/icon.png" platform="ios" width="100" height="100" />	
 
-    <preference name="SplashScreen" value="screen"/>
+    <preference name="SplashScreen" value="splash"/>
     <preference name="SplashScreenDelay" value="5000" />
     
     <access origin="*" />

@@ -28,8 +28,8 @@
     <gap:plugin name="org.apache.cordova.media" />
         
      <!-- Default application icon -->
-	<icon src="www/res/icon.png" />
-	<splash src="www/res/splash.png" />
+	<icon src="icon.png" />
+	<gap:splash src="splash.png" />
 	
 	<!-- Android -->
 	<icon src="www/res/icon.png" platform="android" density="ldpi" />

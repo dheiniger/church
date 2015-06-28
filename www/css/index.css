@@ -327,7 +327,7 @@ input[type=range]:focus::-ms-fill-upper {
     height: 100px;
     width: 70px;
     border: none;
-    background: url("../img/pause1.png");
+    background: url("../img/pause.png");
     margin: auto;
     display: block;
 }

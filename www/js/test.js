@@ -279,6 +279,9 @@ function setupSeekbar() {
 }
 
 function updateTimers(position){
+    if(position < 0){
+	position = 0;
+    }
     var timePlayed = document.getElementById('time-played');
     var timeRemaining = document.getElementById('time-remaining');
     timePlayed.innerHTML = convertSecondsToTimeFormat(position);

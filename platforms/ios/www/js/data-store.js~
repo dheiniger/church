@@ -1,3 +1,0 @@
-var Data = function(){
-    console.log("Constructed!");
-}

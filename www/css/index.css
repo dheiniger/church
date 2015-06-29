@@ -332,13 +332,6 @@ input[type=range]:focus::-ms-fill-upper {
     display: block;
 }
 
-.stop{
-    height: 100px;
-    width: 100px;
-    border: none;
-    background: url("../img/stop.png");
-}
-
 .subheader{
     font-size: 15px;
     text-align: center;

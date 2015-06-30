@@ -12,6 +12,7 @@ var mediaTimer;
 var playPauseButton;
 var seekbar;
 var currentPage = "blog";
+var timerDur;
 
 function updateAbout(){
     currentPage = "about";
@@ -136,7 +137,6 @@ function getSermonBibleText(cleanHtml){
 	    texts.push(biblePassages[entry].innerHTML);
 	}
     });
-
     return texts;
 }*/
 
@@ -234,6 +234,7 @@ function pause(){
 function stop(){    
     if(!(typeof(media) === 'undefined' || media === null)){
 	media.stop();	
+	media.release();
 	clearInterval(mediaTimer);
 	media = null;
     }
@@ -244,7 +245,8 @@ function stop(){
     }
 }
 
-function displaySermon(index){      
+function displaySermon(index){     
+    currentPage = "sermon";
     //Make sure another file isn't already playing
     stop();
     var html = "<h1 class='sermon-title header'>" + sermonTitles[index]+ "</h1>" +
@@ -272,12 +274,6 @@ function isNumeric(num){
     return !isNaN(num)
 }
 
-//@Deprecated
-function setupSeekbar() {
-    seekbar.min = 0;
-    seekbar.max = media.startTime + media.duration();
-}
-
 function updateTimers(position){
     if(position < 0){
 	position = 0;
@@ -298,18 +294,6 @@ function seekAudio() {
 
 function convertToMilliSeconds(seconds){
     return seconds*1000;
-}
-
-//@Deprecated
-function updateUI() {   
-    var lastBuffered = audio.buffered.end(audio.buffered.length-1);
-    var timePlayed = document.getElementById('time-played');
-    var timeRemaining = document.getElementById('time-remaining');
-    seekbar.min = audio.startTime;
-    seekbar.max = lastBuffered;
-    seekbar.value = audio.currentTime;
-    timePlayed.innerHTML = convertSecondsToTimeFormat("" + audio.currentTime);
-    timeRemaining.innerHTML = '-' + convertSecondsToTimeFormat(seekbar.max - audio.currentTime);
 }
 
 function updateSeekBar(){
@@ -337,8 +321,17 @@ function updateSeekBar(){
     }, 1000);
 }
 
-function initializeBar(index){
-    media = new Media(sermonSources[index]);  
+function initializeBar(index){  
+  /* if(!(typeof(timerDur) === 'undefined' || timerDur == null)){
+       clearInterval(timerDur);
+	if(!(typeof(media) === 'undefined' || media == null)){
+	    alert("media is: " + media);
+	    media.stop();
+	    alert("media stopped, it's now: " + media);	    
+	    alert("timer cleared");
+	}
+    }*/
+    media = new Media(sermonSources[index]);
     playPauseButton = document.getElementById('playPauseButton'); 
     seekbar = document.getElementById('seekbar');
   
@@ -349,18 +342,21 @@ function initializeBar(index){
 }
 
 function buffer(){
+   
     //this is a stupid hack
     media.play();
+    media.stop();
     var counter = 0;
-    var timerDur = setInterval(function() {
+    timerDur = setInterval(function() {
+	console.log("Counter: " + counter);
         counter = counter + 100;
         if (counter > 90000) {
 	    alert("There was a problem retrieving the audio file.  Please check your network connection and try again");
             clearInterval(timerDur);
-        }
-	
+        }	
         var dur = media.getDuration();
-        if (dur > 0) {	    
+	console.log("duration: " + dur);
+        if (dur > 0 || currentPage !== "sermon") {	    	    
 	    media.seekTo(0);
 	    media.stop();
 	    media.release();
@@ -369,7 +365,6 @@ function buffer(){
             updateTimers(0);
 	    playPauseButton.className = "";
 	    playPauseButton.className = "play";
-	   // alert("should be enabled now");
         }
     }, 100);
 }
